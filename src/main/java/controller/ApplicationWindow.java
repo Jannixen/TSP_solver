@@ -1,17 +1,11 @@
 package controller;
 
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.City;
-import view.CityMapPane;
-import view.HeaderPane;
-import view.MainWindowPane;
-
-import java.util.HashMap;
+import view.*;
 
 import static view.WindowProperties.WINDOW_HEIGHT;
 import static view.WindowProperties.WINDOW_WIDTH;
@@ -24,39 +18,74 @@ public final class ApplicationWindow extends Stage {
 
     private final Scene scene;
     private final Group root = new Group();
-    private static int id_counter = 1;
-    private static HashMap<Integer, City> cities;
+
+    private MainWindowPane mainWindowPane;
+    private HeaderPane headerPane;
+    private DescriptionPane descriptionPane;
+    private CityMapPane cityMapPane;
+    private SideButtonsPane sideButtonsPane;
 
     private ApplicationWindow() {
         this.scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         buildWindow();
     }
 
-    public static ApplicationWindow makeApplicationWindow() {
+    public static ApplicationWindow getApplicationWindow() {
         return APPLICATION_WINDOW;
     }
 
     private void buildWindow() {
-        Pane mainWindowPane = new MainWindowPane();
-        Pane headerPane = new HeaderPane();
-        Pane cityMapPane = new CityMapPane();
+        addPanes();
+        addMouseListener(scene);
+        addButtonListeners();
 
-        mainWindowPane.getChildren().add(headerPane);
-        mainWindowPane.getChildren().add(cityMapPane);
-
-        this.root.getChildren().add(mainWindowPane);
         this.setScene(scene);
         this.show();
+    }
 
-        addMouseListener(scene);
+    private void addPanes() {
+        mainWindowPane = new MainWindowPane();
+        headerPane = new HeaderPane();
+        cityMapPane = new CityMapPane();
+        descriptionPane = new DescriptionPane();
+        sideButtonsPane = new SideButtonsPane();
+
+        mainWindowPane.getChildren().add(headerPane);
+        mainWindowPane.getChildren().add(descriptionPane);
+        mainWindowPane.getChildren().add(cityMapPane);
+        mainWindowPane.getChildren().add(sideButtonsPane);
+
+        this.root.getChildren().add(mainWindowPane);
     }
 
     private void addMouseListener(Scene scene) {
         scene.setOnMousePressed(event -> {
             System.out.println("mouse click detected! " + event.getX() + ", " + event.getY());
-            City city_from_user = new City(event.getX(), event.getY());
-            cities.put(id_counter++, city_from_user);
+            CitiesPresenter citiesPresenter = new CitiesPresenter(cityMapPane);
+            citiesPresenter.checkIfClickInBorder(event);
         });
     }
+
+    private void addButtonListeners() {
+        sideButtonsPane.getStartButton().setOnAction(makeStartEventHandler());
+        sideButtonsPane.getClearButton().setOnAction(makeClearEventHandler());
+    }
+
+    private EventHandler makeStartEventHandler() {
+        EventHandler<ActionEvent> buttonHandler = event -> {
+            System.out.println("Start");
+            event.consume();
+        };
+        return buttonHandler;
+    }
+
+    private EventHandler makeClearEventHandler() {
+        EventHandler<ActionEvent> buttonHandler = event -> {
+            System.out.println("Clear");
+            event.consume();
+        };
+        return buttonHandler;
+    }
+
 
 }

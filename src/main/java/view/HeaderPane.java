@@ -1,10 +1,8 @@
 package view;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import view.TemplatePane;
 
 import static view.WindowProperties.*;
 
@@ -16,17 +14,16 @@ public class HeaderPane extends TemplatePane {
     }
 
     private void makeHeaderPane() {
-        getChildren().add(makeTitleTextLabel("Comivoyager Problem Solver"));
+        getChildren().add(makeTitleTextLabel(TITLE_TEXT));
     }
 
 
     private Label makeTitleTextLabel(String titleName) {
         Label titleText = new Label(titleName);
-        titleText.setFont(Font.font("Verdana", FontWeight.BOLD, HEADER_TEXT_SIZE));
+        titleText.setFont(Font.font(HEADER_TEXT_FONT, FontWeight.BOLD, HEADER_TEXT_SIZE));
         titleText.setTextFill(HEADER_TEXT_COLOR);
-        titleText.setMaxWidth(Double.MAX_VALUE);
-        titleText.setAlignment(Pos.CENTER);
         titleText.setWrapText(true);
         return titleText;
     }
+
 }
