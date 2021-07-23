@@ -67,19 +67,22 @@ public final class ApplicationWindow extends Stage {
     }
 
     private void addButtonListeners() {
-        sideButtonsPane.getStartButton().setOnAction(makeStartEventHandler());
-        sideButtonsPane.getClearButton().setOnAction(makeClearEventHandler());
+        sideButtonsPane.getStartButton().setOnAction(start());
+        sideButtonsPane.getClearButton().setOnAction(clear());
     }
 
-    private EventHandler makeStartEventHandler() {
+    private EventHandler start() {
         EventHandler<ActionEvent> buttonHandler = event -> {
             System.out.println("Start");
+            PathOptimizer pathOptimizer = new PathOptimizer();
+            PathAnimator pathAnimator = new PathAnimator(cityMapPane);
+            pathAnimator.animate(new int[]{1, 2, 3, 4});
             event.consume();
         };
         return buttonHandler;
     }
 
-    private EventHandler makeClearEventHandler() {
+    private EventHandler clear() {
         EventHandler<ActionEvent> buttonHandler = event -> {
             System.out.println("Clear");
             event.consume();

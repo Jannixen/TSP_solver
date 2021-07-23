@@ -14,12 +14,11 @@ public class ObjectiveFunctionCalculator {
     public double calculate(int[] v) {
         int n = v.length;
         double out = distanceMatrix[0][v[0]];
-        int k = n - 1;
-        for (int i = 0; i < k; i++) {
+        for (int i = 0; i < n - 1; i++) {
             out = out + distanceMatrix[v[i]][v[i + 1]];
         }
         out = out + distanceMatrix[v[n - 1]][0];
-        if (checkForRepetitions(v)) {
+        if (checkForRepetitions(v.clone())) {
             out += PENALTY;
         }
         return out;

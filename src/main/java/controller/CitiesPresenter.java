@@ -17,10 +17,10 @@ public class CitiesPresenter {
     private static int id_counter = 1;
     protected static ArrayList<City> cities = new ArrayList<>();
 
-    private Pane cityMapPane;
+    private Pane citiesMapPane;
 
-    protected CitiesPresenter(Pane cityMapPane) {
-        this.cityMapPane = cityMapPane;
+    protected CitiesPresenter(Pane citiesMapPane) {
+        this.citiesMapPane = citiesMapPane;
     }
 
 
@@ -35,7 +35,7 @@ public class CitiesPresenter {
 
     private void checkIfInCitiesLimit(MouseEvent event) {
         if (id_counter < CITIES_LIMIT) {
-            City city_from_user = new City(event.getX(), event.getY(), id_counter);
+            City city_from_user = new City(event.getX() - CITY_MAP_PANE_POSITION_X, event.getY() - CITY_MAP_PANE_POSITION_Y, id_counter);
             paintCity(city_from_user, id_counter);
             cities.add(city_from_user);
             id_counter++;
@@ -48,20 +48,20 @@ public class CitiesPresenter {
 
         pickRandomCityColor(city_point, text_id);
 
-        cityMapPane.getChildren().add(city_point);
-        cityMapPane.getChildren().add(text_id);
+        citiesMapPane.getChildren().add(city_point);
+        citiesMapPane.getChildren().add(text_id);
     }
 
     private Circle paintCityMakePoint(City city) {
-        double point_x = city.getX() - CITY_MAP_PANE_POSITION_X;
-        double point_y = city.getY() - CITY_MAP_PANE_POSITION_Y;
+        double point_x = city.getX();
+        double point_y = city.getY();
 
         return new Circle(point_x, point_y, CITY_POINT_SIZE, Color.BLACK);
     }
 
     private Text paintCityMakeText(City city, int id) {
-        double text_x = city.getX() + CITY_POINT_SIZE - CITY_MAP_PANE_POSITION_X;
-        double text_y = city.getY() - CITY_MAP_PANE_POSITION_Y;
+        double text_x = city.getX() + CITY_POINT_SIZE;
+        double text_y = city.getY();
 
         Text text_id = new Text(text_x, text_y, Integer.toString(id));
 

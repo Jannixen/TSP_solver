@@ -16,13 +16,11 @@ class Mutation {
     }
 
     void mutate(Population population) {
-        int[][] mutatedPopulationMatrix;
         for (int popRow = 0; popRow < population.getPopulationSize(); popRow++) {
             for (int popCol = 0; popCol < population.getGenomeSize() ; popCol++) {
                 if (randGenerator.nextDouble() < mutationProbability) {
                     int randomCol = randGenerator.nextInt(population.getGenomeSize()-1) + 1;
-                    mutatedPopulationMatrix = swap(new int[]{popRow, popCol}, new int[]{popRow, randomCol}, population.getGenomes());
-                    population.setGenomes(mutatedPopulationMatrix);
+                    swap(new int[]{popRow, popCol}, new int[]{popRow, randomCol}, population.getGenomes());
                 }
             }
         }

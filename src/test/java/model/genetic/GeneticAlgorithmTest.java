@@ -15,23 +15,24 @@ public class GeneticAlgorithmTest {
     public void should_returnGoodResult_when4Cities() {
 
         int genomeSize = 4;
-        int populationSize = 50;
-        double mutationProbability = 0.5;
+        int populationSize = 5;
+        double mutationProbability = 0.1;
         int iterationMax = 5;
-        double[][] distance_matrix = {{0.0, 3.0, 4.0, 2.0, 7.0},
+        double[][] distanceMatrix = {{0.0, 3.0, 4.0, 2.0, 7.0},
                 {1.0, 0.0, 4.0, 6.0, 3.0},
                 {4.0, 4.0, 0.0, 5.0, 8.0},
                 {2.0, 6.0, 5.0, 0.0, 6.0},
                 {7.0, 3.0, 8.0, 6.0, 0.0}};
 
 
-        GeneticAlgorithm testGeneticAlgorithm = new GeneticAlgorithm(genomeSize, populationSize, mutationProbability, iterationMax, distance_matrix);
+        GeneticAlgorithm testGeneticAlgorithm = new GeneticAlgorithm(genomeSize, populationSize, mutationProbability, iterationMax, distanceMatrix);
         testGeneticAlgorithm.runAlgorithm();
-        double resultGenomeObjective = testGeneticAlgorithm.getBestGenomeObjective();
+        double resultGenomeObjective = testGeneticAlgorithm.getAlgorithmResult().getBestGenomeObjective();
+        int[] resultGenome = testGeneticAlgorithm.getAlgorithmResult().getBestGenome();
 
         System.out.println(resultGenomeObjective);
         for (int i=0; i< genomeSize; i++){
-            System.out.println( testGeneticAlgorithm.getBestGenome()[i]);
+            System.out.println(resultGenome[i]);
         }
         assertEquals(19, resultGenomeObjective, 0.000001);
     }
@@ -41,18 +42,19 @@ public class GeneticAlgorithmTest {
     public void should_returnGoodResult_when17Cities() {
 
         int genomeSize = 16;
-        int populationSize = 150;
+        int populationSize = 500;
         double mutationProbability = 0.2;
-        int iterationMax = 10000;
+        int iterationMax = 100000;
         double[][] distanceMatrix = readTestFile("src/test/resources/test2.txt", 17);
 
         GeneticAlgorithm testGeneticAlgorithm = new GeneticAlgorithm(genomeSize, populationSize, mutationProbability, iterationMax, distanceMatrix);
         testGeneticAlgorithm.runAlgorithm();
-        double resultGenomeObjective = testGeneticAlgorithm.getBestGenomeObjective();
+        double resultGenomeObjective = testGeneticAlgorithm.getAlgorithmResult().getBestGenomeObjective();
+        int[] resultGenome = testGeneticAlgorithm.getAlgorithmResult().getBestGenome();
 
         System.out.println(resultGenomeObjective);
         for (int i=0; i< genomeSize; i++){
-            System.out.println( testGeneticAlgorithm.getBestGenome()[i]);
+            System.out.println( resultGenome[i]);
         }
         assertEquals(2085, resultGenomeObjective, 0.00001);
     }

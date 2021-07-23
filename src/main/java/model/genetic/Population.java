@@ -71,6 +71,16 @@ class Population {
         return genomes[minIndex];
     }
 
+    void printPopulation(){
+        for(int i=0; i<populationSize; i++){
+            for (int j=0; j<genomeSize; j++){
+                System.out.print(genomes[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
 
 }
 
