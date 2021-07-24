@@ -5,8 +5,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.genetic.GeneticAlgorithmResult;
 import view.*;
 
+import static controller.CitiesController.cities;
 import static view.WindowProperties.WINDOW_HEIGHT;
 import static view.WindowProperties.WINDOW_WIDTH;
 
@@ -23,7 +25,9 @@ public final class ApplicationWindow extends Stage {
     private HeaderPane headerPane;
     private DescriptionPane descriptionPane;
     private CityMapPane cityMapPane;
-    private SideButtonsPane sideButtonsPane;
+    private SidePane sidePane;
+
+    CitiesController citiesController;
 
     private ApplicationWindow() {
         this.scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -48,35 +52,36 @@ public final class ApplicationWindow extends Stage {
         headerPane = new HeaderPane();
         cityMapPane = new CityMapPane();
         descriptionPane = new DescriptionPane();
-        sideButtonsPane = new SideButtonsPane();
+        sidePane = new SidePane();
 
         mainWindowPane.getChildren().add(headerPane);
         mainWindowPane.getChildren().add(descriptionPane);
         mainWindowPane.getChildren().add(cityMapPane);
-        mainWindowPane.getChildren().add(sideButtonsPane);
+        mainWindowPane.getChildren().add(sidePane);
 
         this.root.getChildren().add(mainWindowPane);
     }
 
     private void addMouseListener(Scene scene) {
         scene.setOnMousePressed(event -> {
-            System.out.println("mouse click detected! " + event.getX() + ", " + event.getY());
-            CitiesPresenter citiesPresenter = new CitiesPresenter(cityMapPane);
-            citiesPresenter.checkIfClickInBorder(event);
+            citiesController = new CitiesController(cityMapPane);
+            citiesController.checkIfClickInBorder(event);
         });
     }
 
     private void addButtonListeners() {
-        sideButtonsPane.getStartButton().setOnAction(start());
-        sideButtonsPane.getClearButton().setOnAction(clear());
+        sidePane.getStartButton().setOnAction(start());
+        sidePane.getClearButton().setOnAction(clear());
     }
 
     private EventHandler start() {
         EventHandler<ActionEvent> buttonHandler = event -> {
             System.out.println("Start");
             PathOptimizer pathOptimizer = new PathOptimizer();
+            GeneticAlgorithmResult results = pathOptimizer.optimize();
+            sidePane.showResult(String.format("%.2f", results.getBestGenomeObjective()));
             PathAnimator pathAnimator = new PathAnimator(cityMapPane);
-            pathAnimator.animate(new int[]{1, 2, 3, 4});
+            pathAnimator.animate(pathOptimizer.optimize().getBestGenome());
             event.consume();
         };
         return buttonHandler;
@@ -85,6 +90,9 @@ public final class ApplicationWindow extends Stage {
     private EventHandler clear() {
         EventHandler<ActionEvent> buttonHandler = event -> {
             System.out.println("Clear");
+            cityMapPane.getChildren().clear();
+            cities.clear();
+            citiesController.clearCitiesCounter();
             event.consume();
         };
         return buttonHandler;

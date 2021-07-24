@@ -3,7 +3,7 @@ package controller;
 import model.genetic.GeneticAlgorithm;
 import model.genetic.GeneticAlgorithmResult;
 
-import static controller.CitiesPresenter.cities;
+import static controller.CitiesController.cities;
 
 public class PathOptimizer {
 
