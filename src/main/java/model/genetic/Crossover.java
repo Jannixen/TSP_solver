@@ -3,12 +3,12 @@ package model.genetic;
 class Crossover {
 
 
-    int[] firstParent;
-    int[] secondParent;
-    int cutoff;
-    int genomeSize;
+    private final int[] firstParent;
+    private final int[] secondParent;
+    private final int cutoff;
+    private final int genomeSize;
 
-    public Crossover(int[] firstParent, int[] secondParent, int cutoff, int genomeSize) {
+    Crossover(int[] firstParent, int[] secondParent, int cutoff, int genomeSize) {
         this.firstParent = firstParent;
         this.secondParent = secondParent;
         this.cutoff = cutoff;
@@ -21,7 +21,7 @@ class Crossover {
         int[] offspring = new int[genomeSize];
         int j = 0;
 
-        while (j < genomeSize ) {
+        while (j < genomeSize) {
             if (j <= cutoff) {
                 offspring[j] = firstParent[j];
             } else {

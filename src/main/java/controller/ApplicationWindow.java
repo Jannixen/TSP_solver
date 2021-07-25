@@ -9,33 +9,21 @@ import model.genetic.GeneticAlgorithmResult;
 import view.*;
 
 import static controller.CitiesController.cities;
-import static view.WindowProperties.WINDOW_HEIGHT;
-import static view.WindowProperties.WINDOW_WIDTH;
+import static view.PanesProperties.WINDOW_HEIGHT;
+import static view.PanesProperties.WINDOW_WIDTH;
 
 
-public final class ApplicationWindow extends Stage {
-
-    public static final ApplicationWindow APPLICATION_WINDOW = new ApplicationWindow();
-
+class ApplicationWindow extends Stage {
 
     private final Scene scene;
     private final Group root = new Group();
-
-    private MainWindowPane mainWindowPane;
-    private HeaderPane headerPane;
-    private DescriptionPane descriptionPane;
+    private CitiesController citiesController;
     private CityMapPane cityMapPane;
     private SidePane sidePane;
 
-    CitiesController citiesController;
-
-    private ApplicationWindow() {
+    ApplicationWindow() {
         this.scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         buildWindow();
-    }
-
-    public static ApplicationWindow getApplicationWindow() {
-        return APPLICATION_WINDOW;
     }
 
     private void buildWindow() {
@@ -48,10 +36,10 @@ public final class ApplicationWindow extends Stage {
     }
 
     private void addPanes() {
-        mainWindowPane = new MainWindowPane();
-        headerPane = new HeaderPane();
+        MainWindowPane mainWindowPane = new MainWindowPane();
+        HeaderPane headerPane = new HeaderPane();
         cityMapPane = new CityMapPane();
-        descriptionPane = new DescriptionPane();
+        DescriptionPane descriptionPane = new DescriptionPane();
         sidePane = new SidePane();
 
         mainWindowPane.getChildren().add(headerPane);
@@ -74,28 +62,28 @@ public final class ApplicationWindow extends Stage {
         sidePane.getClearButton().setOnAction(clear());
     }
 
-    private EventHandler start() {
-        EventHandler<ActionEvent> buttonHandler = event -> {
-            System.out.println("Start");
-            PathOptimizer pathOptimizer = new PathOptimizer();
-            GeneticAlgorithmResult results = pathOptimizer.optimize();
-            sidePane.showResult(String.format("%.2f", results.getBestGenomeObjective()));
-            PathAnimator pathAnimator = new PathAnimator(cityMapPane);
-            pathAnimator.animate(pathOptimizer.optimize().getBestGenome());
-            event.consume();
+    private EventHandler<ActionEvent> start() {
+        return event -> {
+            if (cities.size() < 3) {
+                new AlertWindow("Cities Number", "There should be at least 3 cities.");
+            } else {
+                PathOptimizer pathOptimizer = new PathOptimizer();
+                GeneticAlgorithmResult results = pathOptimizer.optimize();
+                sidePane.showResult(String.format("%.2f", results.getBestGenomeObjective()));
+                PathAnimator pathAnimator = new PathAnimator(cityMapPane);
+                pathAnimator.animate(pathOptimizer.optimize().getBestGenome());
+                event.consume();
+            }
         };
-        return buttonHandler;
     }
 
-    private EventHandler clear() {
-        EventHandler<ActionEvent> buttonHandler = event -> {
-            System.out.println("Clear");
+    private EventHandler<ActionEvent> clear() {
+        return event -> {
             cityMapPane.getChildren().clear();
             cities.clear();
             citiesController.clearCitiesCounter();
             event.consume();
         };
-        return buttonHandler;
     }
 
 

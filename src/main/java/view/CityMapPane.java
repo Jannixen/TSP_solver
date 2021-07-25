@@ -1,9 +1,6 @@
 package view;
 
-import javafx.scene.paint.Color;
-import view.TemplatePane;
-
-import static view.WindowProperties.*;
+import static view.PanesProperties.*;
 
 
 public class CityMapPane extends TemplatePane {

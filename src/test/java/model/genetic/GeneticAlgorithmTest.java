@@ -31,7 +31,7 @@ public class GeneticAlgorithmTest {
         int[] resultGenome = testGeneticAlgorithm.getAlgorithmResult().getBestGenome();
 
         System.out.println(resultGenomeObjective);
-        for (int i=0; i< genomeSize; i++){
+        for (int i = 0; i < genomeSize; i++) {
             System.out.println(resultGenome[i]);
         }
         assertEquals(19, resultGenomeObjective, 0.000001);
@@ -53,14 +53,14 @@ public class GeneticAlgorithmTest {
         int[] resultGenome = testGeneticAlgorithm.getAlgorithmResult().getBestGenome();
 
         System.out.println(resultGenomeObjective);
-        for (int i=0; i< genomeSize; i++){
-            System.out.println( resultGenome[i]);
+        for (int i = 0; i < genomeSize; i++) {
+            System.out.println(resultGenome[i]);
         }
         assertEquals(2085, resultGenomeObjective, 0.00001);
     }
 
 
-    private double[][] readTestFile(String fileName, int citiesNumber){
+    private double[][] readTestFile(String fileName, int citiesNumber) {
         Scanner scan;
         double[][] distance_matrix = new double[citiesNumber][citiesNumber];
 

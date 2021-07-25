@@ -10,21 +10,23 @@ import model.City;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static view.WindowProperties.*;
+import static controller.ApplicationProperties.CITIES_LIMIT;
+import static view.PanesProperties.*;
 
-public class CitiesController {
+class CitiesController {
+
+    static ArrayList<City> cities = new ArrayList<>();
 
     private static int citiesCounter = 1;
-    protected static ArrayList<City> cities = new ArrayList<>();
+    private final Pane citiesMapPane;
 
-    private Pane citiesMapPane;
 
-    protected CitiesController(Pane citiesMapPane) {
+    CitiesController(Pane citiesMapPane) {
         this.citiesMapPane = citiesMapPane;
     }
 
 
-    protected void checkIfClickInBorder(MouseEvent event) {
+    void checkIfClickInBorder(MouseEvent event) {
         if (event.getX() - CITY_MAP_PANE_POSITION_X < CITY_MAP_PANE_HEIGHT &
                 event.getY() - CITY_MAP_PANE_POSITION_Y < CITY_MAP_PANE_WIDTH &
                 event.getX() > CITY_MAP_PANE_POSITION_X &
@@ -33,7 +35,7 @@ public class CitiesController {
         }
     }
 
-    protected void clearCitiesCounter() {
+    void clearCitiesCounter() {
         citiesCounter = 1;
     }
 
@@ -67,13 +69,14 @@ public class CitiesController {
         double textX = city.getX();
         double textY = city.getY() - 2 * CITY_POINT_SIZE;
 
-        Text textId = new Text(textX, textY, Integer.toString(id));
+        String textContent = id + " (" + Math.round(city.getX()) + ", " + Math.round(city.getY()) + " )";
+        Text text = new Text(textX, textY, textContent);
 
         if (id == 1) {
-            textId.setText("START - " + id);
+            text.setText("START - " + textContent);
         }
 
-        return textId;
+        return text;
 
     }
 

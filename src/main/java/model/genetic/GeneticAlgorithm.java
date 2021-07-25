@@ -1,18 +1,14 @@
 package model.genetic;
 
-import model.ObjectiveFunctionCalculator;
-
 
 public class GeneticAlgorithm {
 
-    int iterationMax;
-
-    ObjectiveFunctionCalculator objectiveFunctionCalculator;
-    Population population;
-    Mutation mutation;
-    RouletteSelection rouletteSelection;
-
-    GeneticAlgorithmResult algorithmResult;
+    private final int iterationMax;
+    private final ObjectiveFunctionCalculator objectiveFunctionCalculator;
+    private final Population population;
+    private final Mutation mutation;
+    private final RouletteSelection rouletteSelection;
+    private final GeneticAlgorithmResult algorithmResult;
 
     public GeneticAlgorithm(int genomeSize, int populationSize, double mutationProbability, int iterationMax, double[][] distance_matrix) {
         this.iterationMax = iterationMax;

@@ -1,18 +1,15 @@
 package model.genetic;
 
-import model.ObjectiveFunctionCalculator;
-
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 class Population {
 
-    int populationSize;
-    int[][] genomes;
-    int genomeSize;
+    private final int populationSize;
+    private final int genomeSize;
+    private int[][] genomes;
 
-    public Population(int populationSize, int genomeSize) {
+    Population(int populationSize, int genomeSize) {
         this.populationSize = populationSize;
         this.genomeSize = genomeSize;
 
@@ -21,19 +18,19 @@ class Population {
 
     }
 
-    public int getPopulationSize() {
+    int getPopulationSize() {
         return populationSize;
     }
 
-    public int getGenomeSize() {
+    int getGenomeSize() {
         return genomeSize;
     }
 
-    public int[][] getGenomes() {
+    int[][] getGenomes() {
         return genomes;
     }
 
-    public void setGenomes(int[][] genomes) {
+    void setGenomes(int[][] genomes) {
         this.genomes = genomes;
     }
 
@@ -71,17 +68,6 @@ class Population {
         return genomes[minIndex];
     }
 
-    void printPopulation(){
-        for(int i=0; i<populationSize; i++){
-            for (int j=0; j<genomeSize; j++){
-                System.out.print(genomes[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
-
-
 }
 
 class RandomPopulationGenerator {
@@ -106,16 +92,8 @@ class RandomPopulationGenerator {
     }
 }
 
-class OffspringPopulationGenerator {
+class OffspringPopulationGenerator extends RandomGenerator {
 
-    Random randGenerator;
-
-    public OffspringPopulationGenerator() {
-
-        randGenerator = new Random();
-        randGenerator.setSeed(13);
-
-    }
 
     int[][] makeOffsprings(int[] parentsIndexes, Population population) {
         int[][] offsprings = new int[population.getPopulationSize()][population.getGenomeSize()];

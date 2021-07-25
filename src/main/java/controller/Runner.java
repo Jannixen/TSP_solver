@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import static controller.ApplicationWindow.getApplicationWindow;
 
 public class Runner extends Application {
 
@@ -14,7 +13,7 @@ public class Runner extends Application {
 
     @Override
     public void start(Stage mainStage) {
-        getApplicationWindow();
+        new ApplicationWindow();
         mainStage.setOnCloseRequest(
                 e -> {
                     Platform.exit();

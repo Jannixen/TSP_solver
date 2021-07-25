@@ -1,9 +1,7 @@
 package view;
 
 
-import view.TemplatePane;
-
-import static view.WindowProperties.*;
+import static view.PanesProperties.*;
 
 public class MainWindowPane extends TemplatePane {
 

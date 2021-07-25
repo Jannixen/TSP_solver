@@ -3,22 +3,26 @@ package controller;
 import javafx.animation.PathTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import static controller.ApplicationProperties.*;
 import static controller.CitiesController.cities;
-import static view.WindowProperties.*;
+import static view.PanesProperties.CITY_POINT_SIZE;
 
-public class PathAnimator {
+class PathAnimator {
 
     private final Pane citiesMapPane;
 
-    public PathAnimator(Pane citiesMapPane) {
+    PathAnimator(Pane citiesMapPane) {
         this.citiesMapPane = citiesMapPane;
     }
 
-    public void animate(int[] citiesPath) {
+    void animate(int[] citiesPath) {
         var path = new Path();
         var voyager = new Rectangle(cities.get(0).getX(), cities.get(0).getY(), VOYAGER_DIAGONAL, VOYAGER_DIAGONAL);
         voyager.setFill(Color.BLACK);
@@ -57,7 +61,7 @@ public class PathAnimator {
         path.getElements().add(new MoveTo(x1, y1));
         path.getElements().add(new LineTo(x2, y2));
 
-        double textX = Math.min(x1, x2) + Math.abs(x1 - x2) / 2 ;
+        double textX = Math.min(x1, x2) + Math.abs(x1 - x2) / 2;
         double textY = Math.min(y1, y2) + Math.abs(y1 - y2) / 2 - CITY_POINT_SIZE;
 
         Text text = new Text(textX, textY, Integer.toString(nr));

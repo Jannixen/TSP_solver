@@ -1,19 +1,10 @@
 package model.genetic;
 
-import java.util.Random;
 
-class RouletteSelection {
+class RouletteSelection extends RandomGenerator {
 
-    Random randGenerator;
-
-    public RouletteSelection() {
-        randGenerator = new Random();
-        randGenerator.setSeed(13);
-
-    }
-
-    int[] selectSurvivors(Population population, double[] populationObjectives){
-        double[] fitness = calculateFitness(population,populationObjectives);
+    int[] selectSurvivors(Population population, double[] populationObjectives) {
+        double[] fitness = calculateFitness(population, populationObjectives);
         int[] survivorsIndexes = new int[population.getPopulationSize()];
         for (int i = 0; i < population.getPopulationSize(); i++) {
             int genotypeToSurviveIndex = makeRouletteSelection(fitness);
@@ -44,7 +35,7 @@ class RouletteSelection {
             fitness[popRow] = bestRowValue / objectiveResultsPerRow[popRow];
             sumFitness += fitness[popRow];
         }
-        for (int popRow = 1; popRow <population.getPopulationSize(); popRow++) {
+        for (int popRow = 1; popRow < population.getPopulationSize(); popRow++) {
             fitness[popRow] = fitness[popRow] / sumFitness;
         }
         fitness = makeCumulativeSum(fitness);

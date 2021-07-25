@@ -2,8 +2,8 @@ package model.genetic;
 
 public class GeneticAlgorithmResult {
 
-    int[] bestGenome;
-    double bestGenomeObjective;
+    private int[] bestGenome;
+    private double bestGenomeObjective;
 
     public GeneticAlgorithmResult(int genomeSize) {
         this.bestGenome = new int[genomeSize];
@@ -14,7 +14,7 @@ public class GeneticAlgorithmResult {
         return bestGenome;
     }
 
-    public void setBestGenome(int[] bestGenome) {
+    void setBestGenome(int[] bestGenome) {
         this.bestGenome = bestGenome;
     }
 
@@ -22,7 +22,7 @@ public class GeneticAlgorithmResult {
         return bestGenomeObjective;
     }
 
-    public void setBestGenomeObjective(double bestGenomeObjective) {
+    void setBestGenomeObjective(double bestGenomeObjective) {
         this.bestGenomeObjective = bestGenomeObjective;
     }
 }

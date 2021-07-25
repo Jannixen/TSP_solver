@@ -3,29 +3,42 @@ package controller;
 import model.genetic.GeneticAlgorithm;
 import model.genetic.GeneticAlgorithmResult;
 
+import static controller.ApplicationProperties.*;
 import static controller.CitiesController.cities;
 
-public class PathOptimizer {
+class PathOptimizer {
 
 
-    public GeneticAlgorithmResult optimize() {
-        if (cities.size() < 3) {
-            System.out.println("You have to give at least 3 cities.");
+    GeneticAlgorithmResult optimize() {
+        int genomeSize = cities.size() - 1;
+        double[][] distanceMatrix = makeDistanceMatrix();
+        int populationSize = choosePopulationSize(genomeSize);
+        int iterationMax = chooseIterationMax(genomeSize);
+
+        GeneticAlgorithm testGeneticAlgorithm = new GeneticAlgorithm(genomeSize, populationSize, MUTATION_PROBABILITY, iterationMax, distanceMatrix);
+        testGeneticAlgorithm.runAlgorithm();
+
+        return testGeneticAlgorithm.getAlgorithmResult();
+    }
+
+    private int choosePopulationSize(int genomeSize) {
+        int populationSize;
+        if (genomeSize <= GENOME_SIZE_BOUNDARY) {
+            populationSize = POPULATION_SIZE_LOWER;
         } else {
-            int genomeSize = cities.size() - 1;
-            int populationSize = 50;
-            double mutationProbability = 0.2;
-            int iterationMax = 1000;
-            double[][] distanceMatrix = makeDistanceMatrix();
-
-            GeneticAlgorithm testGeneticAlgorithm = new GeneticAlgorithm(genomeSize, populationSize, mutationProbability, iterationMax, distanceMatrix);
-            testGeneticAlgorithm.runAlgorithm();
-            System.out.println(testGeneticAlgorithm.getAlgorithmResult().getBestGenomeObjective());
-
-            return testGeneticAlgorithm.getAlgorithmResult();
-
+            populationSize = POPULATION_SIZE_UPPER;
         }
-        return null;
+        return populationSize;
+    }
+
+    private int chooseIterationMax(int genomeSize) {
+        int iterationMax;
+        if (genomeSize <= GENOME_SIZE_BOUNDARY) {
+            iterationMax = ITERATION_MAX_LOWER;
+        } else {
+            iterationMax = ITERATION_MAX_UPPER;
+        }
+        return iterationMax;
     }
 
 

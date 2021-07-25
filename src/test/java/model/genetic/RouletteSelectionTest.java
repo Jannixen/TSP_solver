@@ -1,6 +1,5 @@
 package model.genetic;
 
-import model.ObjectiveFunctionCalculator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -36,7 +35,6 @@ public class RouletteSelectionTest {
         RouletteSelection rouletteSelection = new RouletteSelection();
         double[] fitness = rouletteSelection.calculateFitness(population, objectives);
         int rouletteSelected = rouletteSelection.makeRouletteSelection(fitness);
-        System.out.println(rouletteSelected);
 
         assertEquals(6, rouletteSelected);
     }

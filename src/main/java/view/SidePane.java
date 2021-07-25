@@ -3,17 +3,16 @@ package view;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import static view.WindowProperties.*;
+import static view.PanesProperties.*;
 
 public class SidePane extends TemplatePane {
 
-    Button startButton;
-    Button clearButton;
-    Label resultLabel;
+    private Button startButton;
+    private Button clearButton;
+    private Label resultLabel;
 
     public SidePane() {
         super(SIDE_BUTTONS_PANE_POSITION_X, SIDE_BUTTONS_PANE_POSITION_Y, SIDE_BUTTONS_PANE_WIDTH, SIDE_BUTTONS_PANE_HEIGHT, SIDE_BUTTONS_PANE_BACKGROUND, false);
@@ -28,18 +27,18 @@ public class SidePane extends TemplatePane {
         return clearButton;
     }
 
+    public void showResult(String result) {
+        resultLabel.setText("Result: \n" + result);
+    }
+
     private void makeSidePane() {
         startButton = makeStartButton();
         clearButton = makeClearButton();
-        resultLabel = makeResultLabel("Result: \n");
+        resultLabel = makeResultLabel();
 
         getChildren().add(startButton);
         getChildren().add(clearButton);
         getChildren().add(resultLabel);
-    }
-
-    public void showResult(String result){
-        resultLabel.setText("Result: \n" + result);
     }
 
     private Button makeStartButton() {
@@ -59,8 +58,8 @@ public class SidePane extends TemplatePane {
     }
 
 
-    private Label makeResultLabel(String result) {
-        Label resultText = new Label(result);
+    private Label makeResultLabel() {
+        Label resultText = new Label("Result: \n");
         resultText.setFont(Font.font(RESULT_TEXT_FONT, FontWeight.BOLD, RESULT_TEXT_SIZE));
         resultText.setTextFill(RESULT_TEXT_COLOR);
         resultText.setBorder(new Border(new BorderStroke(RESULT_BORDER_COLOR,
